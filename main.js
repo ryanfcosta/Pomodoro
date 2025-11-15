@@ -1,7 +1,7 @@
-const percent_display = document.getElementById("percent_tomato")
 const timer_display = document.getElementById("timer")
 const type_button = document.getElementById("type")
 const start_button = document.getElementById("start_button")
+const brain_fill = document.getElementById("brain-fill")
 
 start_button.addEventListener("click", startStop);
 type_button.addEventListener("click", changeType);
@@ -47,7 +47,14 @@ function updateDisplay(){
     let percent = Math.floor(100 * (total_time - time_left) / total_time)
 
     timer_display.innerHTML = `${minutes}:${(seconds < 10 ? "0" : "")}${seconds}`
-    percent_display.innerHTML = percent + "%"
+    const SVGHEIGHT = 512;
+    let new_y = SVGHEIGHT;   
+    if (current_state === "Work") {
+        new_y = SVGHEIGHT * (1 - (percent / 100));
+    }
+    
+    brain_fill.setAttribute('y', new_y);
+    brain_fill.setAttribute('fill', "#F57993");
 }
 
 function updateState(state_key){

@@ -12,7 +12,14 @@
     <div id="main_card">
         <div id="wrapper">
             <div   class="secondary" id="left_div">
-                <p id="percent_tomato">0%</p>
+                <svg id="brain-svg" viewBox="0 0 512 512">
+                    <rect id="brain-fill"
+                        clip-path="url(brain.svg#brain-clip-path)" 
+                        x="0" y="512" width="512" height="512"
+                        fill="var(--red)" />
+                    <use href="brain.svg#brain_shape" 
+                        fill="none" stroke="#B8B7B7" stroke-width="8px" />
+                </svg>
             </div>
             <div class="secondary" id="right_div">
                 <p id="timer">25:00</p>
