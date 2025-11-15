@@ -11,15 +11,10 @@
     <h1>Pomodoro</h1>
     <div id="main_card">
         <div id="wrapper">
-            <div   class="secondary" id="left_div">
-                <svg id="brain-svg" viewBox="0 0 512 512">
-                    <rect id="brain-fill"
-                        clip-path="url(brain.svg#brain-clip-path)" 
-                        x="0" y="512" width="512" height="512"
-                        fill="var(--red)" />
-                    <use href="brain.svg#brain_shape" 
-                        fill="none" stroke="#B8B7B7" stroke-width="8px" />
-                </svg>
+            <div class="secondary" id="left_div">
+                <div id="brain-fill"></div>
+                
+                <img src="brain-outline.png" id="brain-outline-img">
             </div>
             <div class="secondary" id="right_div">
                 <p id="timer">25:00</p>
@@ -27,7 +22,7 @@
             </div>
         </div>
             <div>
-                <button id="start_button">
+                <button id="start-button">
                     START
                 </button>
             </div>

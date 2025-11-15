@@ -1,6 +1,6 @@
 const timer_display = document.getElementById("timer")
 const type_button = document.getElementById("type")
-const start_button = document.getElementById("start_button")
+const start_button = document.getElementById("start-button")
 const brain_fill = document.getElementById("brain-fill")
 
 start_button.addEventListener("click", startStop);
@@ -8,7 +8,7 @@ type_button.addEventListener("click", changeType);
 
 const STATES = {
     "Work": {
-        duration: 1500,
+        duration: 10,
         color: "var(--red)"
     },
     "Break": {
@@ -40,21 +40,20 @@ function buttonChange(){
         start_button.style.backgroundColor = STATES[current_state].color;
     }
 }
-
 function updateDisplay(){
     let minutes = Math.floor(time_left / 60)
     let seconds = time_left % 60
-    let percent = Math.floor(100 * (total_time - time_left) / total_time)
-
-    timer_display.innerHTML = `${minutes}:${(seconds < 10 ? "0" : "")}${seconds}`
-    const SVGHEIGHT = 512;
-    let new_y = SVGHEIGHT;   
-    if (current_state === "Work") {
-        new_y = SVGHEIGHT * (1 - (percent / 100));
-    }
     
-    brain_fill.setAttribute('y', new_y);
-    brain_fill.setAttribute('fill', "#F57993");
+    // Calcula a porcentagem de 0 a 100
+    let percent = Math.floor(100 * (total_time - time_left) / total_time)
+    timer_display.innerHTML = `${minutes}:${(seconds < 10 ? "0" : "")}${seconds}`
+        let new_position_y = "0%";
+    if (current_state === "Work") {
+        new_position_y = percent + "%";
+    }
+    brain_fill.style.backgroundPositionY = new_position_y;
+    let new_color = "var(--pink)";
+    brain_fill.style.backgroundImage = `linear-gradient(to top, ${new_color} 50%, transparent 50%)`;
 }
 
 function updateState(state_key){
