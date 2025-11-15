@@ -1,32 +1,111 @@
-let timer
-let type = "work"
-let percent
-let start_button = document.getElementById("start_button")
+const percent_display = document.getElementById("percent_tomato")
+const timer_display = document.getElementById("timer")
+const type_button = document.getElementById("type")
+const start_button = document.getElementById("start_button")
 
-function ButtonChange(){
-    start_button.innerText = "STOP"
-    start_button.style.backgroundColor("#4B7DBF")
-}
+start_button.addEventListener("click", startStop);
+type_button.addEventListener("click", changeType);
 
-function Cicle(break_time){
-    while(timer < 1500){
-        timer +=1 
-        percent = timer/1500
-        document.getElementById("percent_tomato").innerHTML(percent)
-        document.getElementById("timer").innerHTML(Math.floor((1500 - timer)/60) + ":" + ((1500 - timer)%60 < 10 ? "0" : "") + (1500 - timer)%60)
-    }
-    timer = 0
-        type = "break"
-    while(timer < break_time){
-        timer +=1
-        percent = timer/break_time
+const STATES = {
+    "Work": {
+        duration: 1500,
+        color: "var(--red)"
+    },
+    "Break": {
+        duration: 300,
+        color: "var(--blue)"
+    },
+    "Long Break": {
+        duration: 1800,
+        color: "var(--purple)"
     }
 }
+const STATE_KEYS = ["Work", "Break","Long Break"]
+let current_key_index = 0
+let current_state = STATE_KEYS[0]
 
-function Start(){
-    ButtonChange()
-    for (let i = 0; i < 4; i++){
-        Cicle(300)
+let cycleTimes = 0;
+let total_time = STATES[current_state].duration
+let time_left = STATES[current_state].duration
+let is_running = false
+let timer_id = null
+
+function buttonChange(){
+    if (is_running){
+        start_button.innerText = "STOP"
+        start_button.style.backgroundColor = "var(--blue)"
     }
-    Cicle(1800)
+    else{
+        start_button.innerText = "START"
+        start_button.style.backgroundColor = STATES[current_state].color;
+    }
+}
+
+function updateDisplay(){
+    let minutes = Math.floor(time_left / 60)
+    let seconds = time_left % 60
+    let percent = Math.floor(100 * (total_time - time_left) / total_time)
+
+    timer_display.innerHTML = `${minutes}:${(seconds < 10 ? "0" : "")}${seconds}`
+    percent_display.innerHTML = percent + "%"
+}
+
+function updateState(state_key){
+    current_state = state_key
+    let stateData = STATES[state_key]
+
+    type_button.innerHTML = current_state;
+    type_button.style.backgroundColor = stateData.color
+
+    total_time = stateData.duration
+    time_left = total_time;
+
+    updateDisplay()
+}
+
+function changeType(){
+    current_key_index = (current_key_index + 1) % STATE_KEYS.length;
+    current_state = STATE_KEYS[current_key_index];
+    updateState(current_state)
+    cycleTimes = 0
+}
+
+function cicle(){
+    clearInterval(timer_id)
+    if (current_state == "Work") {
+        cycleTimes++
+        if(cycleTimes<4){
+            current_state = STATE_KEYS[1]
+        }
+        else{
+            current_state = STATE_KEYS[2]
+            cycleTimes = 0
+        }
+    }
+    else{
+        current_state = STATE_KEYS[0]
+    }
+    updateState(current_state)
+    timer_id = setInterval(loop, 1000)
+}
+function loop(){
+    time_left --
+    updateDisplay()
+    if (time_left < 0) {
+        cicle()
+    }
+}
+
+function startStop(){
+    // se já está rodando o botão irá parar
+    if(is_running){
+        is_running = false
+        clearInterval(timer_id)
+        timer_id = null
+    }
+    else{
+        is_running = true
+        timer_id = setInterval(loop, 1000)
+    }
+    buttonChange()
 }
