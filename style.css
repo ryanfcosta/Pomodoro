@@ -3,7 +3,8 @@
     --red: #F20505;
     --blue: #4B7DBF;
     --purple: #7756BF;
-    --pink: #F57993
+    --pink: #F57993;
+    --yellow: #F2C029;
 }
 
 body{
@@ -17,35 +18,39 @@ h1{
 }
 #main_card{
     width: 1600px;
-    text-align: center;
-    margin: auto;
-    border-radius: 5%;
-    border: 2px solid #B8B7B7 ;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 4px 12px;
+
 }   
 h1{
     text-align: center;
 }
-.secondary{
-    margin: 50px;
-}
-#wrapper{
-    width: 1000px;
+#columns{
+    display: grid;
+    grid-auto-flow: column;
+    width: auto;
     overflow: hidden;
     margin: auto;
     align-items: center;
     display: flex;
     justify-content: space-around;
 }
-#left_div {
+#brain {
     position: relative;
     width: 350px;
     height: 350px;
 }
-#right_div{
-    margin-left: auto;
+.card{
+    display: grid;
+    text-align: center;
+    margin: auto;
+    text-align: center;
+    margin: auto;
+    border-radius: 5%;
+    border: 2px solid #B8B7B7 ;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 4px 12px;
 }
+
 #timer{
+    position: relative;
     font-size: 7em;
     margin-bottom: 0px;    
 }
@@ -57,7 +62,6 @@ h1{
 button{
     color: white;
     background-color:var(--red);
-
     border-radius: 8px;
     border-style: none;
     font-weight: 700;
@@ -87,7 +91,6 @@ button{
 #brain-fill {
     width: 100%;
     height: 100%;
-    /*background-image: linear-gradient(to top, var(--pink) 50%, transparent 50%);*/
     background-size: 100% 200%;
     background-repeat: no-repeat;
     background-position-y: 0%;

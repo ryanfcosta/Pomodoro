@@ -9,23 +9,21 @@
 </head>
 <body>
     <h1>Pomodoro</h1>
-    <div id="main_card">
-        <div id="wrapper">
-            <div class="secondary" id="left_div">
+    <div id="columns">
+        <div class="card">
+            <div id="brain">
                 <div id="brain-fill"></div>
-                
                 <img src="brain-outline.png" id="brain-outline-img">
             </div>
-            <div class="secondary" id="right_div">
-                <p id="timer">25:00</p>
-                <button id="type">Work</button>
-            </div>
+            <p id="timer">25:00</p>
         </div>
-            <div>
-                <button id="start-button">
-                    START
-                </button>
-            </div>
+        <div class="card">
+            <button id="start-button">START</button>
+            <button id="start-button">RESET</button>
+        </div>
+        <div class="card">
+            <button id="type">Work</button>
+        </div>
     </div>
     <script src="main.js"></script>
 </body>

@@ -8,15 +8,15 @@ type_button.addEventListener("click", changeType);
 
 const STATES = {
     "Work": {
-        duration: 10,//debug,correto é 1500
+        duration: 3,//debug,correto é 1500
         color: "var(--red)"
     },
     "Break": {
-        duration: 10, //debug,correto é 300
+        duration: 3, //debug,correto é 300
         color: "var(--blue)"
     },
     "Long Break": {
-        duration: 10,//debug,correto é 1800
+        duration: 3,//debug,correto é 1800
         color: "var(--purple)"
     }
 }
@@ -47,16 +47,19 @@ function updateDisplay(){
     timer_display.innerHTML = `${minutes}:${(seconds < 10 ? "0" : "")}${seconds}`
     
     let percent = Math.floor(100 * (total_time - time_left) / total_time)
-    let new_position_y = "0%";
-    new_position_y = percent + "%";
-    brain_fill.style.backgroundPositionY = new_position_y;
-    if (current_state === STATE_KEYS[0]) {
-        fill_color = "var(--pink)";
+    let new_position_y
+    
+    if (current_state == STATE_KEYS[0]) { 
+        fill_color = "var(--pink)"
+        new_position_y = percent + "%"; 
     } 
-    else {
+    else { 
         fill_color = STATES[current_state].color;
+        new_position_y = (100 - percent) + "%"; 
     }
-    brain_fill.style.backgroundImage = `linear-gradient(to top, ${fill_color} 50%, transparent 50%)`;
+
+    brain_fill.style.backgroundPositionY = new_position_y;
+    brain_fill.style.backgroundImage = `linear-gradient(to top, ${fill_color} 50%, transparent 50%)`
 }
 
 function updateState(state_key){
