@@ -8,15 +8,15 @@ type_button.addEventListener("click", changeType);
 
 const STATES = {
     "Work": {
-        duration: 10,
+        duration: 3,//debug,correto é 1500
         color: "var(--red)"
     },
     "Break": {
-        duration: 300,
+        duration: 3, //debug,correto é 300
         color: "var(--blue)"
     },
     "Long Break": {
-        duration: 1800,
+        duration: 3,//debug,correto é 1800
         color: "var(--purple)"
     }
 }
@@ -41,19 +41,25 @@ function buttonChange(){
     }
 }
 function updateDisplay(){
+    let fill_color 
     let minutes = Math.floor(time_left / 60)
     let seconds = time_left % 60
-    
-    // Calcula a porcentagem de 0 a 100
-    let percent = Math.floor(100 * (total_time - time_left) / total_time)
     timer_display.innerHTML = `${minutes}:${(seconds < 10 ? "0" : "")}${seconds}`
-        let new_position_y = "0%";
-    if (current_state === "Work") {
-        new_position_y = percent + "%";
+    
+    let percent = Math.floor(100 * (total_time - time_left) / total_time)
+    let new_position_y
+    
+    if (current_state == STATE_KEYS[0]) { 
+        fill_color = "var(--pink)"
+        new_position_y = percent + "%"; 
+    } 
+    else { 
+        fill_color = STATES[current_state].color;
+        new_position_y = (100 - percent) + "%"; 
     }
+
     brain_fill.style.backgroundPositionY = new_position_y;
-    let new_color = "var(--pink)";
-    brain_fill.style.backgroundImage = `linear-gradient(to top, ${new_color} 50%, transparent 50%)`;
+    brain_fill.style.backgroundImage = `linear-gradient(to top, ${fill_color} 50%, transparent 50%)`
 }
 
 function updateState(state_key){
